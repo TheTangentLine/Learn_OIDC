@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, ConfigDict
+
 
 class SignUpInputDto(BaseModel):
     username: str
@@ -6,9 +7,8 @@ class SignUpInputDto(BaseModel):
     password: str
 
 class SignUpResponseDto(BaseModel):
-    id: int
+    id: str
     username: str
     email: EmailStr
 
-    class Config:
-        from_attribute = True
+    model_config = ConfigDict(from_attributes=True)

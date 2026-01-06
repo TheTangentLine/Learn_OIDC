@@ -1,2 +1,3 @@
 fastapi[standard]
 python-jose
+python-dotenv
