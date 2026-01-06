@@ -1,5 +1,9 @@
 from pydantic import BaseModel
 
-class LoginDto(BaseModel):
-    email: str
+class LoginInputDto(BaseModel):
+    username: str
     password: str
+
+class LoginResponseDto(BaseModel):
+    access_token: str
+    token_type: str = "bearer"

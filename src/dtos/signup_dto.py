@@ -1,6 +1,14 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
 
-class SignUpDto(BaseModel):
+class SignUpInputDto(BaseModel):
     username: str
-    email: str
+    email: EmailStr
     password: str
+
+class SignUpResponseDto(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+
+    class Config:
+        from_attribute = True
