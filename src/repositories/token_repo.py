@@ -12,8 +12,5 @@ class TokenRepo:
         return await RefreshToken.find_one(
             RefreshToken.token == token_str, RefreshToken.revoked == False
         )
-
-    async def revoke(self, token_str: str) -> None:
-        await RefreshToken.find(RefreshToken.token == token_str).update(
-            {"$set": {RefreshToken.revoked: True}}
-        )
+    
+    # Add get token by ID
