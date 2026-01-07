@@ -1,4 +1,5 @@
-from pydantic import BaseModel, EmailStr, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
+from beanie import PydanticObjectId
 
 
 class SignUpInputDto(BaseModel):
@@ -7,7 +8,7 @@ class SignUpInputDto(BaseModel):
     password: str
 
 class SignUpResponseDto(BaseModel):
-    id: str
+    id: PydanticObjectId
     username: str
     email: EmailStr
 
