@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from jose import jwt
+import uuid
 
 from ..dtos.token_dto import TokenSub
 from .config import settings
@@ -23,5 +24,5 @@ def decode_token(token: str):
     return payload
 
 def create_refresh_token() -> str:
-    return "hhelo world"
+    return str(uuid.uuid4())
 
