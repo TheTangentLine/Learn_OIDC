@@ -10,6 +10,7 @@ from src.repositories.token_repo import TokenRepo
 from src.core.security import *
 from src.core.config import settings
 
+
 class AuthService:
     def __init__(self, user_repo: UserRepo, token_repo: TokenRepo):
         self.user_repo = user_repo
@@ -42,7 +43,7 @@ class AuthService:
 
         new_refresh_token = RefreshToken(
             token=refresh_token,
-            user_id=find_user.id,   # type: ignore
+            user_id=find_user.id,  # type: ignore
             expires_at=datetime.now(timezone.utc)
             + timedelta(minutes=settings.REFRESH_TOKEN_TTL),
         )
@@ -53,22 +54,15 @@ class AuthService:
     # -------------------------------- Refresh token ----------------------->
 
     async def renew_access_token(self, refresh_token: str | None) -> LoginResponseDto:
-        # Go to db Token and retrieve token based on UID
-        # Check if token is correct -> issue new one
 
         if not refresh_token:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-        
-        payload = decode_token(refresh_token)
-        if not payload:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
-        user_id = payload.get("sub")
-        if not user_id:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
         valid_token = await self.token_repo.get_valid_token(refresh_token)
         if not valid_token:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+        
+        user_id = valid_token.user_id
         new_access_token = create_access_token(TokenSub(user_id))
 
         return LoginResponseDto(access_token=new_access_token)
