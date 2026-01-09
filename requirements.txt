@@ -1,1 +1,9 @@
 fastapi[standard]
+python-jose
+python-dotenv
+beanie
+pymongo
+passlib
+pydantic_settings
+motor
+argon2_cffi

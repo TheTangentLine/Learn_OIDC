@@ -1,6 +1,15 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, EmailStr
+from beanie import PydanticObjectId
 
-class SignUpDto(BaseModel):
+
+class SignUpInputDto(BaseModel):
     username: str
-    email: str
+    email: EmailStr
     password: str
+
+class SignUpResponseDto(BaseModel):
+    id: PydanticObjectId
+    username: str
+    email: EmailStr
+
+    model_config = ConfigDict(from_attributes=True)

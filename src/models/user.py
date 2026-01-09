@@ -1,7 +1,16 @@
-from pydantic import BaseModel
+from beanie import Document
+from pymongo import IndexModel, ASCENDING
 
-class User(BaseModel):
-    id: str
+
+class User(Document):
     username: str
     email: str
-    password: str = ''
+    password: str = ""
+
+    class Settings:
+        name = "users"
+
+        indexes = [
+            IndexModel([("username", ASCENDING)], unique=True),
+            IndexModel([("email", ASCENDING)], unique=True),
+        ]
