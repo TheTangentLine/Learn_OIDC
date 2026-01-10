@@ -7,3 +7,6 @@ passlib
 pydantic_settings
 motor
 argon2_cffi
+authlib
+starlette
+itsdangerous
