@@ -3,6 +3,7 @@ from beanie import init_beanie
 
 from .models.user import User
 from .models.refresh_token import RefreshToken
+from .models.federated import Federated
 
 from .core.config import settings
 
@@ -12,6 +13,7 @@ async def init_db():
         database=client[settings.DB_NAME],  # type: ignore
         document_models=[
             User, 
-            RefreshToken
+            RefreshToken, 
+            Federated
         ]
     )
