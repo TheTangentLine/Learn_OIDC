@@ -30,11 +30,14 @@ class Settings(BaseSettings):
 
     PRIVATE_KEY: str = ""
     PUBLIC_KEY: str = ""
+    CSRF_KEY: str = Field(default="Anything you like")
 
     ALGORITHM: str = Field(default="RS256", description="JWT algorithm")
     ACCESS_TOKEN_TTL: int = Field(default=30, description="Access token TTL, unit = seconds")
     REFRESH_TOKEN_TTL: int = Field(default=7, description="Refresh token TTL, unit = days")
 
+    CLIENT_ID: str = Field(default="Client ID", description="Google Client ID")
+    CLIENT_SECRET: str = Field(default="Client Secret", description="Google Client Secret")
 
     @model_validator(mode="after")
     def load_keys_from_files(self):
@@ -51,8 +54,7 @@ class Settings(BaseSettings):
             raise ValueError(f"Public key not found at: {self.PUBLIC_KEY_PATH}")
         
         return self
-
-
+    
     model_config = SettingsConfigDict(
         env_file=get_env_file(),
         env_file_encoding="utf-8",

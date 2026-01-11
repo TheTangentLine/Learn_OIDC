@@ -1,5 +1,4 @@
 from typing import Optional
-from beanie import PydanticObjectId
 from src.models.refresh_token import RefreshToken
 
 
@@ -12,5 +11,3 @@ class TokenRepo:
         return await RefreshToken.find_one(
             RefreshToken.token == token_str, RefreshToken.revoked == False
         )
-    
-    # Add get token by ID
