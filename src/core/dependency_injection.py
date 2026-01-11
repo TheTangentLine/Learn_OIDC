@@ -13,4 +13,5 @@ def get_auth_service():
 def get_third_party_auth_service():
     user_repo = UserRepo()
     federated_repo = FederatedRepo()
-    return ThirdPartyAuthService(user_repo=user_repo, federated_repo=federated_repo)
+    token_repo = TokenRepo()
+    return ThirdPartyAuthService(user_repo=user_repo, federated_repo=federated_repo, token_repo=token_repo)

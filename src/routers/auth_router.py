@@ -54,9 +54,20 @@ async def login_google(
 ):
     return await service.google_login(request)
 
-@router.get("/google/callback")
+@router.get("/google/callback", response_model=LoginResponseDto)
 async def google_callback(
     request: Request,
-    service: ThirdPartyAuthService = Depends(get_third_party_auth_service)
+    response: Response,
+    service: ThirdPartyAuthService = Depends(get_third_party_auth_service),
 ):
-    return await service.google_callback(request)
+    result = await service.google_callback(request)
+    response.set_cookie(
+        key="refresh_token",
+        value=result.refresh_token,
+        httponly=True,
+        max_age=7 * 24 * 60 * 60,
+        samesite="lax",
+        secure=False,
+        path="/",
+    )
+    return LoginResponseDto(access_token=result.access_token)
