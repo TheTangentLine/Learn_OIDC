@@ -5,6 +5,7 @@ This document outlines the authentication flow, data model, and security require
 ## 1. Authentication Sequence
 
 The following diagram illustrates the interaction between the User, our API, and the Google Provider.
+
 **Note:** The highlighted section indicates steps implicitly handled by the browser/redirects.
 
 ```mermaid
@@ -24,7 +25,7 @@ sequenceDiagram
     User->>API: GET /auth/callback/google?code=...
     end
     
-    API->>Google: POST: [https://oauth2.googleapis.com/token](https://oauth2.googleapis.com/token)
+    API->>Google: POST: https://oauth2.googleapis.com/token
     
     Note right of API: Payload:<br/>{ "code": "AuthCode_987...",<br/>"client_id": "id",<br/>"client_secret": "sec",<br/>"redirect_uri": "auth/callback/google",<br/>"grant_type": "authorization_code" }
     
