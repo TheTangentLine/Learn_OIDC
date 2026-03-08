@@ -16,11 +16,11 @@ def verify_password(plain_password, hashed_password) -> bool:
 
 def create_access_token(data: TokenSub) -> str:
     data.exp = datetime.now(timezone.utc) + timedelta(minutes=settings.ACCESS_TOKEN_TTL)
-    encoded_jwt = jwt.encode(data.model_dump(), settings.PUBLIC_KEY, algorithm=settings.ALGORITHM)
+    encoded_jwt = jwt.encode(data.model_dump(), settings.PRIVATE_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
 def decode_token(token: str):
-    payload = jwt.decode(token, settings.PRIVATE_KEY, algorithms=[settings.ALGORITHM])
+    payload = jwt.decode(token, settings.PUBLIC_KEY, algorithms=[settings.ALGORITHM])
     return payload
 
 def create_refresh_token() -> str:
